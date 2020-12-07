@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from "react";
+import { error, profile } from "console";
+import React, { useState, FormEvent, useEffect } from "react";
 import api from "../../services/api";
 import instagramApi from "../../services/InstagramApi";
 import { Form, Title, Container } from "./styles";
@@ -53,8 +54,8 @@ interface Profile {
 }
 
 interface Favorite {
-  full_name: String;
-  description: String;
+  full_name: string;
+  description: string;
   owner: {
     login: string;
     avatar_url: string;
@@ -63,11 +64,21 @@ interface Favorite {
 
 const Dashboard: React.FC = () => {
   const [newUser, setNewUser] = useState("");
-  const [newFav, setNewFav] = useState<Favorite[]>([]);
+  const [newFavorite, setNewFavorite] = useState<Favorite[]>([]);
   const [userProfile, setUserProfile] = useState<Profile>({} as Profile);
-  // const state = {
-  //   favorites: [],
-  // };
+
+
+  // useEffect(() => {
+    // api
+    //   .get("/profile")
+    //   .then((response) => {
+    //     const profiles = response.data;
+    //     setNewFavorite(profiles);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  // }, []);
 
   async function handleAddUserName(
     event: FormEvent<HTMLFormElement>
@@ -83,15 +94,12 @@ const Dashboard: React.FC = () => {
     setNewUser("");
   }
 
-  // const getContent = async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:3333/profile");
-  //     const data = await res.json()
-  //     // console.log("teste 1:", data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getContent = async () => {
+    const res = await fetch("http://localhost:3333/profile");
+    const data = await res.json();
+
+    setNewFavorite(data);
+  };
 
   const postContent = async () => {
     try {
@@ -105,25 +113,21 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-    const res = await fetch("http://localhost:3333/profile");
-    const data = await res.json();
-    setNewFav([...newFav, data]);
-    console.log("teste 2: ", data);
   };
+
+  // async function handleGetData(): Promise<void> {
+  //   const getData = await api.get('/profile');
+  //   const repo = getData.data;
+  //   setNewFavorite([...newFavorite, repo]);
+  // }
 
   const saveData = () => {
     postContent();
-    // getContent();
-    console.log("teste 3 com o newFav passando como parametro: ", newFav);
+
+    console.log(newFavorite);
+    
+    getContent();
   };
-
-  // const getDataDb = async () => {
-  //   const response = await api.get("/profile");
-
-  //   // console.log(response.data)
-  //   this.setState({ users: response.data });
-  // }
-
   return (
     <>
       <Container>
@@ -144,8 +148,9 @@ const Dashboard: React.FC = () => {
             <div className="sideBar-container">
               <div>
                 <div>
-                  {newFav.map((data) => (
-                    <a href="something">
+                  <Title style={{ fontSize: "16px" }}>Favoritos</Title>
+                  {newFavorite.map((data) => (
+                    <a key={data?.full_name} href="www.google.com.br">
                       <img
                         width={64}
                         src={data.owner?.avatar_url}
@@ -185,7 +190,7 @@ const Dashboard: React.FC = () => {
                   <div className="content">
                     <a href={userProfile?.owner?.html_url}>
                       <p>
-                        <strong>Github</strong>
+                        <strong>Perfil do Github</strong>
                       </p>
                     </a>
                     <a href={userProfile?.html_url}>

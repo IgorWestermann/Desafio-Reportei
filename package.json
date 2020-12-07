@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "axios": "^0.21.0"
+    "@types/styled-components": "^5.1.4",
+    "axios": "^0.21.0",
+    "polished": "^4.0.5",
+    "styled-components": "^5.2.1"
   }
 }

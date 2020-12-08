@@ -11,7 +11,7 @@
 - [5. Dependências](#5-dependências)
 
 ## 2. Sobre o projeto
-O projeto consiste na criação de um biblioteca virtual como desafio do processo de seleção de estágio da empresa [App Masters](https://appmasters.io/en/)
+O projeto consiste na criação de uma aplicação web, onde o usuário pesquisa por um repositório no github e é retornado as informações referentes e com a opção de salvar os favoritos. Desafio realizado para o processo de seleção de estágio da empresa [Reportei](https://reportei.com/)
 
 
 ## 3. Inicialização
@@ -22,7 +22,7 @@ Para inicializar o projeto primeiro, clone o repositório atraves do comando no 
 E instale as dependencias.
    - `npm i` para se estiver usando o NPM.
    - `yarn i` para Yarn.
-   
+
 Após instalar as dependências abra a pasta do Frontend com `cd frontend` e execute o comando
    - `npm start` para se estiver usando o NPM.
    - `yarn start` para Yarn.

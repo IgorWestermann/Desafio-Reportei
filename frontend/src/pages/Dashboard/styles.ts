@@ -94,6 +94,7 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      padding-top: 8px;
 
       a + a {
         margin-left: 48px;
@@ -128,7 +129,6 @@ export const Container = styled.div`
         }
       }
     }
-  }
 `;
 
 export const Favorites = styled.div`

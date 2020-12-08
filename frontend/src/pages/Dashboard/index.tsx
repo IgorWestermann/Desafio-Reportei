@@ -43,6 +43,7 @@ const Dashboard: React.FC = () => {
   const [newUser, setNewUser] = useState("");
   const [newFavorite, setNewFavorite] = useState<Favorite[]>([]);
   const [userProfile, setUserProfile] = useState<Profile>({} as Profile);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     getContent();
@@ -53,35 +54,42 @@ const Dashboard: React.FC = () => {
   ): Promise<void> {
     event.preventDefault();
 
-    const response = await api.get<Profile>(`repos/${newUser}`);
-
-    const userData = response.data;
-    console.log(userData);
-
-    setUserProfile(userData);
-    setNewUser("");
-  }
-
-  const getContent = async () => {
-    const res = await fetch("http://localhost:3333/profile");
-    const data = await res.json();
-
-    setNewFavorite(data);
-  };
-
-  const postContent = async () => {
-    try {
-      const response = await fetch("http://localhost:3333/profile", {
-        method: "POST",
-        body: JSON.stringify(userProfile),
-        headers: { "Content-Type": "application/json" },
-      });
-      const responseEnv = await response.json();
-      console.log(responseEnv);
-    } catch (error) {
-      console.log(error);
+    if (!newUser) {
+      setErrorMessage("Digite o perfil/nome do repositório");
     }
-  };
+    try {
+      const response = await api.get<Profile>(`repos/${newUser}`);
+
+      const userData = response.data;
+
+      setUserProfile(userData);
+      setNewUser("");
+
+    } catch (error) {
+    setErrorMessage("Repositório não encontrado");
+  }
+}
+
+const getContent = async () => {
+  const res = await fetch("http://localhost:3333/profile");
+  const data = await res.json();
+  setNewFavorite(data);
+}
+
+const postContent = async () => {
+  try {
+    const response = await fetch("http://localhost:3333/profile", {
+      method: "POST",
+      body: JSON.stringify(userProfile),
+      headers: { "Content-Type": "application/json" },
+    });
+    const responseEnv = await response.json();
+    console.log(responseEnv);
+  } catch (error) {
+    console.log(error);
+  }
+};
+    
 
   const saveData = () => {
     postContent();
@@ -102,6 +110,7 @@ const Dashboard: React.FC = () => {
             />
             <button type="submit">Pesquisar</button>
           </Form>
+          {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
           {userProfile.owner ? (
             <p>Resultados obtidos de: {userProfile?.full_name}</p>
           ) : (
@@ -168,8 +177,12 @@ const Dashboard: React.FC = () => {
                     <div className="column">
                       <Main>
                         <p>
-                          <strong>Nome do repositório:</strong>
+                          <strong>Nome do repositório: </strong>
                           {userProfile?.name}
+                        </p>
+                        <p>
+                          <strong>Autor: </strong>
+                          {userProfile?.owner.login}
                         </p>
                         <div className="content">
                           <a href={userProfile?.owner?.html_url}>

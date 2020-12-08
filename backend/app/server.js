@@ -12,7 +12,6 @@ const Profile = mongoose.model("profile");
 const getUser = async () => {
   try {
     const response = await api.get("/westermann.i/?__a=1");
-    // console.log("response.data");
   } catch (error) {
     console.error(error);
   }
@@ -47,5 +46,3 @@ mongoose
 app.listen(3333, () => {
   console.log("Server started on 3333 port");
 });
-
-// export default app;

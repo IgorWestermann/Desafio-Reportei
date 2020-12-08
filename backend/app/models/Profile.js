@@ -2,18 +2,6 @@ const mongoose = require("mongoose");
 
 const Profile = new mongoose.Schema(
   {
-    // titulo: {
-    //   type: String,
-    //   required: true,
-    // },
-    // conteudo: {
-    //   type: String,
-    //   required: true,
-    // },
-    // diretor: {
-    //   type: String,
-    //   required: true,
-    // },
     name: { type: String },
     full_name: { type: String },
     description: { type: String },
@@ -30,6 +18,7 @@ const Profile = new mongoose.Schema(
     forks: { type: Number },
     watchers_count: { type: Number },
 
+    // instagram
     // graphql: {
     //   user: {
     //     biography: string, //biografia

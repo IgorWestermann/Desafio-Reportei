@@ -1,6 +1,4 @@
-// const express = require("express");
 const { Router } = require("express");
-// const app = require("../index");
 const routes = Router();
 const mongoose = require("mongoose");
 
@@ -29,7 +27,7 @@ routes.get("/profile/:id", async (request, response) => {
 
     return response.status(400).json({
       error: true,
-      message: "Não foi encontrado nenhum profile...",
+      message: "Não foi encontrado...",
     });
   }
 
@@ -41,11 +39,11 @@ routes.post("/profile", (request, response) => {
     if (err)
       return response.status(400).json({
         error: true,
-        message: "Error: Profile não foi cadastrado...",
+        message: "Error: Falha no cadastrado...",
       });
     return response.status(200).json({
       error: false,
-      message: "Profile registrado com SUCESSO",
+      message: "Registrado realizado com sucesso",
     });
   });
 });
